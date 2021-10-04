@@ -7,6 +7,19 @@ body {
     color: #FFF !important;
     background-color: rgb(35, 35, 47) !important;
 }
+body #ResultsArea {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 @font-face {
     font-family: MmrText;
     src: url(/Public/fonts/mmrtext.ttf);
