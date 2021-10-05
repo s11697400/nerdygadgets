@@ -24,6 +24,17 @@ body #ResultsArea {
     font-family: MmrText;
     src: url(/Public/fonts/mmrtext.ttf);
 }
+.form-submit {
+    width: 100%;
+    padding: 5px 35px 5px 5px;
+    font-size: 16px;
+    border: 1px solid #CCC;
+    height:50px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../Img/search-loop.png) 96% / 30px no-repeat #EEE;
+}
 select {
     margin: 50px;
     width: 100%;
