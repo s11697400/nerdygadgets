@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ab8655e-ce96-41b8-8919-f2776cf95d88" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/nerdygadgets.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nerdygadgets.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Public/CSS/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Public/CSS/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/namen.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/view.php" beforeDir="false" afterPath="$PROJECT_DIR$/view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +39,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../testtje" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -51,6 +56,8 @@
       <updated>1633344107488</updated>
       <workItem from="1633344128005" duration="3659000" />
       <workItem from="1633440106093" duration="1182000" />
+      <workItem from="1633523690385" duration="87000" />
+      <workItem from="1636622087853" duration="5795000" />
     </task>
     <servers />
   </component>

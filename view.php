@@ -1,6 +1,7 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
+include "cartfuncties.php";
 
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
@@ -82,8 +83,23 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                     <div class="CenterPriceLeftChild">
                         <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></p>
                         <h6> Inclusief BTW </h6>
+
+                        <form method="post">
+                            <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>" hidden>
+<!--                            <input type="number" name="stockItemPrice" value="--><?php //print($StockItem['SellPrice']) ?><!--" hidden>-->
+                            <input type="submit" name="submit" value="Voeg toe aan winkelmandje">
+                        </form>
                     </div>
                 </div>
+
+                <?php
+                if (isset($_POST["submit"])) {
+                    $stockItemID = $_POST["stockItemID"];
+//                    $stockItemPrice = $_POST["stockItemPrice"];
+                    addProductToCart($stockItemID);
+                    print("Product toegevoegd aan <a href='cart.php'> winkelmandje!</a>");
+                }
+                ?>
             </div>
         </div>
 

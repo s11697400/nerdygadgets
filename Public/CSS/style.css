@@ -21,7 +21,7 @@ body #ResultsArea {
     }
 }
 @font-face {
-    font-family: MmrText;
+    font-family: 'Poppins', sans-serif;
     src: url(/Public/fonts/mmrtext.ttf);
 }
 .form-submit {
@@ -260,7 +260,7 @@ ul#ul-class-navigation li {
     position: absolute;
 }
 #LogoImage {
-    background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");
+    /*background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");*/
     width: 250px;
     height: 300px;
 }
@@ -500,4 +500,9 @@ ul#ul-class-price li {
     background: rgb(36, 41, 143);
     border: 1px rgb(98, 158, 255) solid;
     color: #fff;
+}
+
+/* cart page */
+.product-in-cart {
+    display: flex;
 }
