@@ -86,20 +86,17 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
                         <form method="post">
                             <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>" hidden>
-<!--                            <input type="number" name="stockItemPrice" value="--><?php //print($StockItem['SellPrice']) ?><!--" hidden>-->
                             <input type="submit" name="submit" value="Voeg toe aan winkelmandje">
+                            <?php
+                            if (isset($_POST["submit"])) {
+                                $stockItemID = $_POST["stockItemID"];
+                                addProductToCart($stockItemID);
+                                print("Product toegevoegd aan <a href='cart.php'> winkelmandje!</a>");
+                            }
+                            ?>
                         </form>
                     </div>
                 </div>
-
-                <?php
-                if (isset($_POST["submit"])) {
-                    $stockItemID = $_POST["stockItemID"];
-//                    $stockItemPrice = $_POST["stockItemPrice"];
-                    addProductToCart($stockItemID);
-                    print("Product toegevoegd aan <a href='cart.php'> winkelmandje!</a>");
-                }
-                ?>
             </div>
         </div>
 
