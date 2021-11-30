@@ -6,6 +6,10 @@ include "cartfuncties.php";
         <div class="cart">
             <h1>Inhoud Winkelwagen</h1>
 
+            <script>
+
+            </script>
+
             <?php
             $cart = getCart();
             $totalPrice = 0;
@@ -27,7 +31,9 @@ include "cartfuncties.php";
                 <div class="product-in-cart">
                     <div class="image">
                         <div id="ImageFrame"
-                             style="background-image: url('Public/StockItemIMG/<?php print $image ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                             style="background-image: url('Public/StockItemIMG/<?php print $image ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;">
+                            <a href="view.php?id=<?php print $id ?>" class="view-product"></a>
+                        </div>
                     </div>
                     <?php if (!empty($_POST["submitCount$id"])) {
                         $stockItemID = $_POST["stockItemID"];
@@ -39,11 +45,11 @@ include "cartfuncties.php";
 
                     <div class="description">
 
-                        <div class="product name">Product naam: <a href="view.php?id=<?php print $id ?>"><?php print $name ?></a></div>
-                        <div class="product price">Prijs: <?php print '€' . $sellPrice ?></div>
-                        <div class="product quantity">Aantal: <?php print $quantity ?></div>
-                        <div class="product total">Totaal: <?php print '€' . $total ?></div>
-                        <div class="product quantity-form">Aantal aanpassen:
+                        <div class="product name"><span>Product naam:</span> <a href="view.php?id=<?php print $id ?>"><?php print $name ?></a></div>
+                        <div class="product price"><span>Prijs:</span><?php print '€' . $sellPrice ?></div>
+                        <div class="product quantity"><span>Aantal:</span><?php print $quantity ?></div>
+                        <div class="product total"><span>Totaal:</span><?php print '€' . $total ?></div>
+                        <div class="product quantity-form"><span>Aantal aanpassen:</span>
                             <form method="post" class="submited">
                                 <input type="number" name="stockItemID" value="<?php print $id ?>" hidden>
                                 <input type="number" name="aantal" value="<?php print $quantity ?>" min="1"/>
@@ -55,7 +61,7 @@ include "cartfuncties.php";
                         if (isset($_POST["submitDelete$id"])) {
                             $stockItemID = $_POST["stockItemID"];
                             removeProductFromCart($stockItemID);
-                            print("Product verwijderd uit <a href='cart.php'> winkelmandje!</a>");
+                            print("Product verwijderd uit  <a href='cart.php'> winkelmandje!</a>");
                         }
                         ?>
 
@@ -71,7 +77,7 @@ include "cartfuncties.php";
                 $totalPrice += $total;
             }
             if (!empty($totalPrice)) {
-                print "<p>Totaalprijs Winkelwagen: €" . $totalPrice . "</p>";
+                print "<h4>Totaalprijs Winkelwagen: €" . $totalPrice . "</h4>";
             }
             ?>
         </div>

@@ -595,10 +595,24 @@ ul#ul-class-price li {
 .cart-container .product-in-cart .quantity {
     display: flex;
 }
-
+.cart-container .product-in-cart .description span {
+    font-weight: 700;
+    margin-right: 8px;
+}
 .cart-container .product-in-cart .description .product {
-    font-size: 18px;
-    line-height: 1.5;
+    font-size: 20px;
+    line-height: 1.4;
+}
+.product-in-cart #ImageFrame {
+    position: relative;
+}
+
+.product-in-cart #ImageFrame .view-product {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .cart-container .product-in-cart .description .quantity-form {
