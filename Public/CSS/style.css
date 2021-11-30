@@ -427,9 +427,10 @@ ul#ul-class-navigation li {
 }
 
 #LogoImage {
-    /*background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");*/
-    width: 250px;
-    height: 300px;
+    background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
 }
 
 ul#ul-class li {
@@ -576,13 +577,44 @@ ul#ul-class-price li {
     bottom: 0;
 }
 
+/* single article view styling */
+#ArticleHeader .add-to-cart {
+    width: fit-content;
+}
+
 /* cart page always start with .cart-container then specific class etc. */
 .cart-container {
     padding: 25px 5%;
 }
+
 .cart-container .product-in-cart {
     display: flex;
+    margin: 25px 0;
 }
+
 .cart-container .product-in-cart .quantity {
     display: flex;
+}
+
+.cart-container .product-in-cart .description .product {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.cart-container .product-in-cart .description .quantity-form {
+    width: fit-content;
+}
+
+.button {
+    margin: 15px 0;
+}
+
+.button.delete-from-cart {
+    background: red;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 6px;
+    box-shadow: none;
+    border: none;
+    width: fit-content;
 }

@@ -86,7 +86,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
                         <form method="post">
                             <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>" hidden>
-                            <input type="submit" name="submit" value="Voeg toe aan winkelmandje">
+                            <input type="submit" name="submit" value="Voeg toe aan winkelmandje" class="add-to-cart">
                             <?php
                             if (isset($_POST["submit"])) {
                                 $stockItemID = $_POST["stockItemID"];
