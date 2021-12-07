@@ -8,6 +8,16 @@ $databaseConnection = connectToDatabase();
 <html lang="en">
 <head>
     <title>NerdyGadgets</title>
+    
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RET09J82JC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-RET09J82JC');
+</script>
 
     <!-- Javascript -->
     <script src="Public/JS/fontawesome.js"></script>
