@@ -1,7 +1,8 @@
 <!-- dit bestand bevat alle code die verbinding maakt met de database -->
 <?php
 
-function connectToDatabase() {
+function connectToDatabase()
+{
     $Connection = null;
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set MySQLi to throw exceptions
@@ -20,7 +21,8 @@ function connectToDatabase() {
     return $Connection;
 }
 
-function getHeaderStockGroups($databaseConnection) {
+function getHeaderStockGroups($databaseConnection)
+{
     $Query = "
                 SELECT StockGroupID, StockGroupName, ImagePath
                 FROM stockgroups 
@@ -35,7 +37,8 @@ function getHeaderStockGroups($databaseConnection) {
     return $HeaderStockGroups;
 }
 
-function getStockGroups($databaseConnection) {
+function getStockGroups($databaseConnection)
+{
     $Query = "
             SELECT StockGroupID, StockGroupName, ImagePath
             FROM stockgroups 
@@ -51,7 +54,8 @@ function getStockGroups($databaseConnection) {
     return $StockGroups;
 }
 
-function getStockItem($id, $databaseConnection) {
+function getStockItem($id, $databaseConnection)
+{
     $Result = null;
 
     $Query = " 
@@ -80,7 +84,8 @@ function getStockItem($id, $databaseConnection) {
     return $Result;
 }
 
-function getStockItemImage($id, $databaseConnection) {
+function getStockItemImage($id, $databaseConnection)
+{
 
     $Query = "
                 SELECT ImagePath
@@ -89,6 +94,41 @@ function getStockItemImage($id, $databaseConnection) {
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+}
+
+function setPersonOrder($fullName, $preferredName, $searchName, $phoneNumber, $emailAdress, $validDate, $databaseConnection)
+{
+
+    $Query = "INSERT INTO people (FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword,
+                    IsSystemUser, IsEmployee, IsSalesperson, UserPreferences, PhoneNumber, FaxNumber, EmailAddress, Photo,
+                    CustomFields, OtherLanguages, LastEditedBy, ValidFrom, ValidTo)
+              VALUES ($fullName , $preferredName , $searchName , 0, NULL, 0, NULL,
+                      0, 0, 0, NULL, $phoneNumber , NULL , $emailAdress ,  NULL,
+                      NULL, NULL, 1, $validDate , '9999-12-31')";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+}
+
+function removeQuantityOutOfDatabase($id, $databaseConnection) {
+
+    $Query = "
+    UPDATE stockitemholdings
+    SET QuantityOnHand=
+    WHERE StockItemID=$id
+    ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
     $R = mysqli_stmt_get_result($Statement);
     $R = mysqli_fetch_all($R, MYSQLI_ASSOC);

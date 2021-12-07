@@ -431,15 +431,16 @@ ul#ul-class-navigation li {
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
+    background-size: contain;
 }
 
 ul#ul-class li {
     display: inline;
     color: white;
-    margin-right: 1em;
     font-size: 18px;
     text-decoration: none;
     line-height: 120px;
+    margin-right: 0.5em;
 }
 
 ul#ul-class-price li {
