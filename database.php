@@ -62,7 +62,7 @@ function getStockItem($id, $databaseConnection)
            SELECT SI.StockItemID, 
             (RecommendedRetailPrice*(1+(TaxRate/100))) AS SellPrice, 
             StockItemName,
-            CONCAT('Voorraad: ',QuantityOnHand)AS QuantityOnHand,
+            QuantityOnHand,
             SearchDetails, 
             (CASE WHEN (RecommendedRetailPrice*(1+(TaxRate/100))) > 50 THEN 0 ELSE 6.95 END) AS SendCosts, MarketingComments, CustomFields, SI.Video,
             (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath   
@@ -101,37 +101,61 @@ function getStockItemImage($id, $databaseConnection)
     return $R;
 }
 
-function setPersonOrder($fullName, $preferredName, $searchName, $phoneNumber, $emailAdress, $validDate, $databaseConnection)
+function insertOrderLines($stockItemID, $description, $packageTypeID, $quantity,
+                          $unitPrice, $pickedQuantity, $lastEditedBy, $databaseConnection)
 {
 
-    $Query = "INSERT INTO people (FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword,
-                    IsSystemUser, IsEmployee, IsSalesperson, UserPreferences, PhoneNumber, FaxNumber, EmailAddress, Photo,
-                    CustomFields, OtherLanguages, LastEditedBy, ValidFrom, ValidTo)
-              VALUES ($fullName , $preferredName , $searchName , 0, NULL, 0, NULL,
-                      0, 0, 0, NULL, $phoneNumber , NULL , $emailAdress ,  NULL,
-                      NULL, NULL, 1, $validDate , '9999-12-31')";
+    $Query = "INSERT INTO orderlines (OrderID, StockItemID, Description, PackageTypeID, Quantity,
+                         UnitPrice, TaxRate, PickedQuantity, PickingCompletedWhen, LastEditedBy)
+              VALUES (73588, $stockItemID, $description, $packageTypeID, $quantity,
+                        $unitPrice, 15.000, $pickedQuantity, $lastEditedBy)";
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "i", $id);
     mysqli_stmt_execute($Statement);
-    $R = mysqli_stmt_get_result($Statement);
-    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
-
-    return $R;
 }
 
-function removeQuantityOutOfDatabase($id, $databaseConnection) {
+//function insertOrders($databaseConnection) {}
 
+function updateQuantity($id, $voorraad, $quantity, $databaseConnection)
+{
     $Query = "
     UPDATE stockitemholdings
-    SET QuantityOnHand=
+    SET QuantityOnHand=$voorraad - $quantity
     WHERE StockItemID=$id
     ";
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
-    $R = mysqli_stmt_get_result($Statement);
-    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+}
 
-    return $R;
+function getUnitPrice($id, $databaseConnection)
+{
+    $Query = "
+    SELECT UnitPrice 
+    FROM `stockitems` 
+    WHERE StockItemID=$id
+    ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $rowData['UnitPrice'];
+        }
+    }
+
+}
+
+function testDatabaseFunction($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $databaseConnection)
+{
+    $Query = "
+    INSERT INTO `cities`(`CityID`, `CityName`, `StateProvinceID`, `Location`, `LatestRecordedPopulation`, `LastEditedBy`, `ValidFrom`, `ValidTo`) 
+    VALUES ($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8);
+    ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
 }

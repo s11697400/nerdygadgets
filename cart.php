@@ -1,13 +1,12 @@
 <?php
 include __DIR__ . "/header.php";
-include "cartfuncties.php";
 ?>
     <div class="cart-container">
+
         <div class="cart">
             <h1>Inhoud Winkelwagen</h1>
 
             <?php
-            $cart = getCart();
             $totalPrice = 0;
             foreach ($cart as $id => $quantity) {
                 $StockItem = getStockItem($id, $databaseConnection);
@@ -79,73 +78,47 @@ include "cartfuncties.php";
             }
             ?>
         </div>
+
         <div class="order-form">
-            <?php
-            if (isset($_POST["submitOrder"])) {
-                $fullName = $_POST["fullName"];
-                $preferredName = $_POST["preferredName"];
-                $searchName = $_POST["searchName"];
-                $phoneNumber = $_POST["phoneNumber"];
-                $emailAdress = $_POST["emailAdress"];
-                $validDate = $_POST["validDate"];
-
-//                setPersonOrder($fullName, $preferredName, $searchName, $phoneNumber, $faxNumber, $emailAdress, $validDate, $databaseConnection);
-                setPersonOrder('Naam', 'Test', 'Zoek', '06123456789', 'agrita', $validDate, $databaseConnection);
-            }
-            ?>
-
             <form method="post">
-                <input type="text" name="fullName" value="" placeholder="Volledige naam">
-                <input type="text" name="preferredName" value="" placeholder="Gebruikersnaam">
-                <input type="text" name="searchName" value="" placeholder="Zoek naam">
-                <input type="text" name="phoneNumber" value="" placeholder="Telefoonnummer">
-                <input type="text" name="emailAdress" value="" placeholder="E-mailadres">
-                <input type="text" name="validDate" value="<?php print date("Y-m-d") ?>" hidden>
 
                 <?php
-                function getStockItemQuantity($databaseConnection)
-                {
+                if (isset($_POST['submitOrder'])) {
+                    foreach ($cart as $id => $quantity) {
+                        $getUnitPrice = getUnitPrice($id, $databaseConnection);
 
-                    $Query = "SELECT * FROM stockitemholdings";
+//                        change quantity
+                        $StockItem = getStockItem($id, $databaseConnection);
+                        $voorraad = $StockItem['QuantityOnHand'];
 
-                    $Statement = mysqli_prepare($databaseConnection, $Query);
-                    mysqli_stmt_execute($Statement);
-                    var_dump($Statement);
-                    $Result = mysqli_stmt_get_result($Statement);
-                    $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+                        $updateQuantity = updateQuantity($id, $voorraad, $quantity, $databaseConnection);
 
-                    return $Result;
+//                        add order line
+                        $timestamp = date("H:i:s");
+
+                        $stockItemID = $id;
+                        $description = $StockItem['StockItemName'];
+                        $packageTypeID = 7;
+                        $unitPrice = $getUnitPrice;
+                        $pickedQuantity = $quantity;
+//                        $pickingCompletedWhen = date("Y-m-d", $timestamp);
+                        $lastEditedBy = 4;
+//                        $lastEditedWhen = date("Y-m-d", $timestamp);
+
+                        insertOrderLines(73589, "Beschrijving", 1,
+                            20, 11.11, 15, 11, $databaseConnection);
+
+//                        insertOrderLines($stockItemID, $description, $packageTypeID, $quantity,
+//                            $unitPrice, $pickedQuantity, $lastEditedBy, $databaseConnection);
+                    }
                 }
-                getStockItemQuantity($databaseConnection);
-
-                $sql = "SELECT * FROM stockitemholdings";
-                $result = $databaseConnection->query($sql);
-
-                if ($result->num_rows > 0) {
-                    echo $result;
-                } else {
-                    echo "0 results";
-                }
-                $databaseConnection->close();
-
-                foreach ($cart as $id => $quantity) {
-                    $StockItem = getStockItem($id, $databaseConnection);
-                    $voorraad = $StockItem['QuantityOnHand'];
-
-//                    var_dump(
-//                            $id . ' en ' . $quantity
-//                    );
-                    ?>
-                    <input type="text" name="stockItemID" value="<?php print $id ?>" hidden>
-                    <input type="text" name="stockItemQuantity" value="<?php print $quantity ?>" hidden>
-                    <?php
-                }
+                if (!empty($cart)) :
                 ?>
-
                 <input name="submitOrder" type="submit" value="Betalen" class="button confirm-order"/>
+                <?php endif; ?>
             </form>
-
         </div>
+
     </div>
 
 <?php

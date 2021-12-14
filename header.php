@@ -2,6 +2,9 @@
 <?php
 session_start();
 include "database.php";
+include "cartfuncties.php";
+
+$cart = getCart();
 $databaseConnection = connectToDatabase();
 ?>
 <!DOCTYPE html>
@@ -45,17 +48,36 @@ $databaseConnection = connectToDatabase();
                     <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
                 </li>
                 <li>
-                    <a href="cart.php" class="HrefDecoration">Winkelwagen</a>
+                    <a href="cart.php" class="HrefDecoration">Winkelwagen<i class="fa fa-shopping-cart">
+                            <div class="count-products-shopping-cart">
+                                <?php
+                                $cartTotalProducts = (int)0;
+                                foreach ($cart as $id => $quantity) {
+                                    $cartTotalProducts += (int)$quantity;
+                                }
+                                if ($cartTotalProducts > 99) {
+                                    echo '99+';
+                                } else {
+                                    echo $cartTotalProducts;
+                                }
+                                ?>
+                            </div>
+                        </i>
+                    </a>
                 </li>
             </ul>
         </div>
-<!-- code voor US3: zoeken -->
+        <!-- code voor US3: zoeken -->
         <ul id="ul-class-navigation">
+            <li>
+                <a href="register.php" class="HrefDecoration LoginPage"><i class="fas fa-user"></i>Login
+                </a>
+            </li>
             <li>
                 <a href="browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>
             </li>
         </ul>
-<!-- einde code voor US3 zoeken -->
+        <!-- einde code voor US3 zoeken -->
     </div>
     <div class="row" id="Content">
         <div class="col-12">
