@@ -101,17 +101,26 @@ function getStockItemImage($id, $databaseConnection)
     return $R;
 }
 
-function insertOrderLines($stockItemID, $description, $packageTypeID, $quantity,
-                          $unitPrice, $pickedQuantity, $lastEditedBy, $databaseConnection)
+function insertOrderLines($orderID, $stockItemID, $description, $packageTypeID, $quantity,
+                          $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
+                          $lastEditedBy, $lastEditedWhen, $databaseConnection)
 {
 
-    $Query = "INSERT INTO orderlines (OrderID, StockItemID, Description, PackageTypeID, Quantity,
-                         UnitPrice, TaxRate, PickedQuantity, PickingCompletedWhen, LastEditedBy)
-              VALUES (73588, $stockItemID, $description, $packageTypeID, $quantity,
-                        $unitPrice, 15.000, $pickedQuantity, $lastEditedBy)";
+    $Query = "INSERT INTO `orderlines`(`OrderID`, `StockItemID`, `Description`, `PackageTypeID`, `Quantity`,
+                         `UnitPrice`, `TaxRate`, `PickedQuantity`, `PickingCompletedWhen`, 
+                         `LastEditedBy`, `LastEditedWhen`)
+              VALUES (?, ?, ?, ?, ?,
+                        ?, ?, ?, ?, 
+                      ?, ?)";
 
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_execute($Statement);
+    $stmt = $databaseConnection->prepare($Query);
+    $stmt->bind_param($orderID, $stockItemID, "$description", $packageTypeID, $quantity,
+        $unitPrice, $taxRate, $pickedQuantity, "$pickingCompletedWhen",
+        $lastEditedBy, "$lastEditedWhen");
+
+    $stmt->execute();
+
+    printf("%d row inserted.\n", $stmt->affected_rows);
 }
 
 //function insertOrders($databaseConnection) {}
@@ -149,13 +158,13 @@ function getUnitPrice($id, $databaseConnection)
 
 }
 
-function testDatabaseFunction($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $databaseConnection)
-{
-    $Query = "
-    INSERT INTO `cities`(`CityID`, `CityName`, `StateProvinceID`, `Location`, `LatestRecordedPopulation`, `LastEditedBy`, `ValidFrom`, `ValidTo`) 
-    VALUES ($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8);
-    ";
-
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_execute($Statement);
-}
+//function testDatabaseFunction($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $databaseConnection)
+//{
+//    $Query = "
+//    INSERT INTO `cities`(`CityID`, `CityName`, `StateProvinceID`, `Location`, `LatestRecordedPopulation`, `LastEditedBy`, `ValidFrom`, `ValidTo`)
+//    VALUES ($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8);
+//    ";
+//
+//    $Statement = mysqli_prepare($databaseConnection, $Query);
+//    mysqli_stmt_execute($Statement);
+//}

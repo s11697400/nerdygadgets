@@ -91,7 +91,7 @@ include __DIR__ . "/header.php";
                         $StockItem = getStockItem($id, $databaseConnection);
                         $voorraad = $StockItem['QuantityOnHand'];
 
-                        $updateQuantity = updateQuantity($id, $voorraad, $quantity, $databaseConnection);
+                        updateQuantity($id, $voorraad, $quantity, $databaseConnection);
 
 //                        add order line
                         $timestamp = date("H:i:s");
@@ -105,16 +105,17 @@ include __DIR__ . "/header.php";
                         $lastEditedBy = 4;
 //                        $lastEditedWhen = date("Y-m-d", $timestamp);
 
-                        insertOrderLines(73589, "Beschrijving", 1,
-                            20, 11.11, 15, 11, $databaseConnection);
+                        insertOrderLines(73589, $stockItemID, $description, 1, 20,
+                            11.11, 15.000, 15, "2021-12-12 00:00:00",
+                            $lastEditedBy, "2021-12-12 00:00:00", $databaseConnection);
 
 //                        insertOrderLines($stockItemID, $description, $packageTypeID, $quantity,
 //                            $unitPrice, $pickedQuantity, $lastEditedBy, $databaseConnection);
                     }
                 }
                 if (!empty($cart)) :
-                ?>
-                <input name="submitOrder" type="submit" value="Betalen" class="button confirm-order"/>
+                    ?>
+                    <input name="submitOrder" type="submit" value="Betalen" class="button confirm-order"/>
                 <?php endif; ?>
             </form>
         </div>
