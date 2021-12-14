@@ -1,6 +1,7 @@
 <!-- dit bestand bevat alle code voor het productoverzicht -->
 <?php
 include __DIR__ . "/header.php";
+include "viewfunctions.php";
 
 $ReturnableResult = null;
 $Sort = "SellPrice";
@@ -254,6 +255,8 @@ function berekenVerkoopPrijs($adviesPrijs, $btw)
     <?php
     if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
         foreach ($ReturnableResult as $row) {
+            $StarsAvarage = getAvarageStars($row['StockItemID'], $databaseConnection);
+
             ?>
             <!--  coderegel 1 van User story: bekijken producten  -->
 
@@ -275,11 +278,13 @@ function berekenVerkoopPrijs($adviesPrijs, $btw)
                         <div class="CenterPriceLeftChild">
                             <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                             <h6>Inclusief BTW </h6>
+                            
                         </div>
                     </div>
                     <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
                     <p class="StockItemName"><?php print $row["StockItemName"]; ?></p>
                     <p class="StockItemComments"><?php print $row["MarketingComments"]; ?></p>
+                    <h6><?php printStars($StarsAvarage, true); ?></h6>
                     <h4 class="ItemQuantity"><?php print getVoorraadTekst($row["QuantityOnHand"]); ?></h4>
                 </div>
                 <!--  coderegel 2 van User story: bekijken producten  -->

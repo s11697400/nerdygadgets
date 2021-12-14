@@ -2,11 +2,19 @@
 <?php
 include __DIR__ . "/header.php";
 include "cartfuncties.php";
+include "viewfunctions.php";
 
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
-?>
+$Review = getReviews($_GET['id'], $databaseConnection);
+$StarsAvarage = getAvarageStars($_GET['id'], $databaseConnection);
+
+$id = $_GET['id'];
+if(!isset($_SESSION)) { 
+    session_start(); 
+  } ?>
 <div id="CenteredContent">
+
     <?php
     if ($StockItem != null) {
         ?>
@@ -77,6 +85,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
             <h2 class="StockItemNameViewSize StockItemName">
                 <?php print $StockItem['StockItemName']; ?>
             </h2>
+            <h3><?php printStars($StarsAvarage, true);?></h3>
             <div class="QuantityText"><?php print $StockItem['QuantityOnHand']; ?></div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
@@ -140,6 +149,40 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 <?php
             }
             ?>
+        </div>
+        <div class="reviews">
+            <h2 class="heading">Reviews</h2><br/>
+            <div class="review-grid-container">
+                <?php
+                    printStars($Review, false);
+                ?>
+            </div>
+
+         
+            <?php
+            if(!empty($_POST['verzenden']) && isset($_SESSION['submit'])){
+                insertReviews($_GET['id'], $_POST['name'], $_POST['sterren'], $_POST['review'], $databaseConnection);
+               echo "<script> alert('De review is geupload dankuwel!); </script>";
+               unset($_SESSION['submit']);
+               unset($_POST['verzenden']);
+            }
+            else{
+                if(isset($_POST['verzenden'])){
+                  $_SESSION['submit'] = $_POST['verzenden'];
+                }
+            }
+
+            ?>
+            <div class="review-form">
+            <h2 class="heading">Laat hier uw review achter</h2><br/>
+            <form method="post" action="">
+                <input type="name" placeholder="Vul hier uw naam in" name="name"/>
+                <input type="num" placeholder="Aantal sterren" max=5 min=0 name="sterren"/>
+                <textarea rows="10" name="review" placeholder="Laat uw review van het product achter"></textarea>
+                <input type="submit" name="verzenden" />
+            </form>
+            </div>
+
         </div>
         <?php
     } else {

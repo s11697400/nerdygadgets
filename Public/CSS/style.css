@@ -583,6 +583,38 @@ ul#ul-class-price li {
     width: fit-content;
 }
 
+#SubContent .review, 
+#SubContent .review .heading {
+    width: 100%;
+}
+
+#SubContent .reviews .container-review {
+    margin: 25px;
+    width: calc(33.333% - 50px);
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background-color: rgba(35, 40, 47, 0.8);
+}
+
+#SubContent .reviews .container-review:nth-child(3n+1) {
+    margin-left: 0 !important;
+}
+
+#SubContent .reviews .review-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#SubContent .reviews .container-review .inner-container{
+    padding: 1.5em;
+    font-size: 20px;
+}
+
+#SubContent .reviews .review-form{
+    margin: 30px 0;
+}
+
 /* cart page always start with .cart-container then specific class etc. */
 .cart-container {
     padding: 25px 5%;
