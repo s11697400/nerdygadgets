@@ -84,6 +84,15 @@ include __DIR__ . "/header.php";
 
                 <?php
                 if (isset($_POST['submitOrder'])) {
+                    
+
+                    
+                    print bestelForm();
+                    
+                }
+                if(isset($_POST['betalen'])){
+                    $_POST['submitOrder'] = "DATA";
+                    $orderID = insertOrder($databaseConnection);
                     foreach ($cart as $id => $quantity) {
                         $getUnitPrice = getUnitPrice($id, $databaseConnection);
 
@@ -101,22 +110,17 @@ include __DIR__ . "/header.php";
                         $packageTypeID = 7;
                         $unitPrice = $getUnitPrice;
                         $pickedQuantity = $quantity;
-//                        $pickingCompletedWhen = date("Y-m-d", $timestamp);
                         $lastEditedBy = 4;
-//                        $lastEditedWhen = date("Y-m-d", $timestamp);
 
-                        insertOrderLines(73589, $stockItemID, $description, 1, 20,
-                            11.11, 15.000, 15, "2021-12-12 00:00:00",
-                            $lastEditedBy, "2021-12-12 00:00:00", $databaseConnection);
-
-//                        insertOrderLines($stockItemID, $description, $packageTypeID, $quantity,
-//                            $unitPrice, $pickedQuantity, $lastEditedBy, $databaseConnection);
-                    }
+                        print insertOrderLines($orderID,$stockItemID, $description, 1, $quantity,
+                            $unitPrice, 15.000, 15, "2021-12-12 00:00:00",
+                            $lastEditedBy, "2021-12-12 00:00:00", $databaseConnection);  
                 }
-                if (!empty($cart)) :
+            }
+                if (!empty($cart)&& !isset($_POST['submitOrder'])){
                     ?>
                     <input name="submitOrder" type="submit" value="Betalen" class="button confirm-order"/>
-                <?php endif; ?>
+                <?php } ?>
             </form>
         </div>
 

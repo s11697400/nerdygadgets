@@ -63,3 +63,14 @@ function updateCart($stockItemID, $amount)
 	return $amount;
 									// werk de "gedeelde" $_SESSION["cart"] bij met de bijgewerkte cart
 }
+
+
+function bestelForm(){
+    $output = '<form method="post">';
+    $output .= '<input type="text" placeholder="Straat, huisnummer en woonplaats"/>';
+    $output .= '<input type="text" placeholder="Postcode"/>';
+    $output .= '<input type="submit" value="Betalen" name="betalen"/>';
+    $output .= '</form>';
+
+return $output;
+}

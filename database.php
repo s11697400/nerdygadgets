@@ -114,13 +114,13 @@ function insertOrderLines($orderID, $stockItemID, $description, $packageTypeID, 
                       ?, ?)";
 
     $stmt = $databaseConnection->prepare($Query);
-    $stmt->bind_param($orderID, $stockItemID, "$description", $packageTypeID, $quantity,
-        $unitPrice, $taxRate, $pickedQuantity, "$pickingCompletedWhen",
-        $lastEditedBy, "$lastEditedWhen");
+    $stmt->bind_param("iisiiddisss",$orderID, $stockItemID, $description, $packageTypeID, $quantity,
+        $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
+        $lastEditedBy, $lastEditedWhen);
 
     $stmt->execute();
 
-    printf("%d row inserted.\n", $stmt->affected_rows);
+    return "<h1> Betaald! De bestelling wordt verwerkt!</h1>";
 }
 
 //function insertOrders($databaseConnection) {}
@@ -157,6 +157,25 @@ function getUnitPrice($id, $databaseConnection)
     }
 
 }
+
+function insertOrder($databaseConnection)
+{
+
+    $Query = "INSERT INTO `orders`(`CustomerID`, `SalespersonPersonID`, `ContactPersonID`, `LastEditedBy`)
+              VALUES (2, 2, 2, 25)";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $stmt->execute();
+    $last_id = mysqli_insert_id($databaseConnection);
+   return $last_id;
+}
+
+
+
+//$last_id = mysqli_insert_id($conn);
 
 //function testDatabaseFunction($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $databaseConnection)
 //{
