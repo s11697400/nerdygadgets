@@ -70,7 +70,7 @@ $databaseConnection = connectToDatabase();
         <!-- code voor US3: zoeken -->
         <ul id="ul-class-navigation">
             <li>
-                <a href="register.php" class="HrefDecoration LoginPage"><i class="fas fa-user"></i>Login
+                <a href="login.php" class="HrefDecoration LoginPage"><i class="fas fa-user"></i>Login
                 </a>
             </li>
             <li>

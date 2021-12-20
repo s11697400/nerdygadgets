@@ -100,6 +100,22 @@ function getStockItemImage($id, $databaseConnection)
 
     return $R;
 }
+function getStockItemName($id, $databaseConnection)
+{
+
+    $Query = "
+                SELECT StockItemName
+                FROM stockitems 
+                WHERE StockItemID = ?";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+}
 
 function insertOrderLines($orderID, $stockItemID, $description, $packageTypeID, $quantity,
                           $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
@@ -173,17 +189,73 @@ function insertOrder($databaseConnection)
    return $last_id;
 }
 
+//(mysql_num_rows(mysql_query("SELECT * FROM `users` WHERE 'site_name' LIKE 'berland' AND 'card_id' LIKE '290093C84E' LIMIT 0 , 30"))>0
+
+function checkUser($username, $password, $databaseConnection)
+{
+
+    $Query = "SELECT PostalPostalCode, DeliveryAddressLine2, CustomerID, CustomerName, Password FROM `customers` WHERE CustomerName = ? AND Password = ?";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
 
 
-//$last_id = mysqli_insert_id($conn);
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "ss", $username, $password);
+    mysqli_stmt_execute($Statement);
 
-//function testDatabaseFunction($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8, $databaseConnection)
-//{
-//    $Query = "
-//    INSERT INTO `cities`(`CityID`, `CityName`, `StateProvinceID`, `Location`, `LatestRecordedPopulation`, `LastEditedBy`, `ValidFrom`, `ValidTo`)
-//    VALUES ($val1, $val2, $val3, $val4, $val5, $val6, $val7, $val8);
-//    ";
-//
-//    $Statement = mysqli_prepare($databaseConnection, $Query);
-//    mysqli_stmt_execute($Statement);
-//}
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+    
+}
+
+function getOrders($id, $databaseConnection)
+{
+
+    $Query = "SELECT * FROM `orders` WHERE CustomerID = ? ORDER BY OrderDate";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+}
+function getOrderlines($id, $databaseConnection)
+{
+
+    $Query = "SELECT * FROM `orderlines` WHERE OrderID = ?";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+}
+
