@@ -45,4 +45,5 @@ if(isset($_POST['submit'])){
         <input name="password" type="password" placeholder="Password" />
         <input type="submit" name="submit" value="Login">
     </form>
+    <a href="/nerdygadgets/register.php">Register</a> | <a href="/nerdygadgets/dashboard.php">Dashboard</a>
 </div>

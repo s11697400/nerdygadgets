@@ -674,3 +674,6 @@ ul#ul-class-price li {
     border-bottom: 3px solid white;
     margin-bottom: 20px;
 }
+.container-login div{
+    display: flex;
+}

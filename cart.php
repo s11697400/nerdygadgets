@@ -1,5 +1,14 @@
 <?php
 include __DIR__ . "/header.php";
+
+if(isset($_SESSION['id'])){
+$adresses = UserAdress($_SESSION['id'], $databaseConnection);
+foreach($adresses as $adress){
+    
+    $adress = $adress;
+}
+
+}
 ?>
     <div class="cart-container">
 
@@ -84,11 +93,13 @@ include __DIR__ . "/header.php";
 
                 <?php
                 if (isset($_POST['submitOrder'])) {
-                    
+                    if(isset($adress)){
+                        print bestelForm($adress['PostalPostalCode'], $adress['DeliveryAddressLine2']);
+                    }
 
-                    
-                    print bestelForm();
-                    
+                    else{
+                    print bestelForm(false, false);
+                    }
                 }
                 if(isset($_POST['betalen'])){
                     $_POST['submitOrder'] = "DATA";

@@ -65,12 +65,21 @@ function updateCart($stockItemID, $amount)
 }
 
 
-function bestelForm(){
+function bestelForm($adress, $postcode){
+    if($adress == false && $postcode == false){
     $output = '<form method="post">';
-    $output .= '<input type="text" placeholder="Straat, huisnummer en woonplaats"/>';
+    $output .= '<input type="text" placeholder="Straat en huisnummer"/>';
     $output .= '<input type="text" placeholder="Postcode"/>';
     $output .= '<input type="submit" value="Betalen" name="betalen"/>';
     $output .= '</form>';
+    }
+    else{
+        $output = '<form method="post">';
+        $output .= '<input type="text" placeholder="Straat en huisnummer" value="'.$adress.'"/>';
+        $output .= '<input type="text" placeholder="Postcode" value="'.$postcode.'"/>';
+        $output .= '<input type="submit" value="Betalen" name="betalen"/>';
+        $output .= '</form>';
+    }
 
 return $output;
 }
