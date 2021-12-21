@@ -13,6 +13,29 @@ $id = $_GET['id'];
 if(!isset($_SESSION)) { 
     session_start(); 
   } ?>
+<?php
+if (!isset($_SESSION["lastviewed"])) {
+$_SESSION["lastviewed"] = array();
+}
+$maxelements = 5;
+if (isset($id) && $id <> "")
+
+if (in_array($id, $_SESSION["lastviewed"])) {
+
+$_SESSION["lastviewed"] = array_diff($_SESSION["lastviewed"], array($id));
+
+}
+
+if (count($_SESSION["lastviewed"]) >= $maxelements) {
+
+$_SESSION["lastviewed"] = array_slice($_SESSION["lastviewed"], 1);
+
+array_push($_SESSION["lastviewed"], $id);
+
+} else {
+array_push($_SESSION["lastviewed"], $id);
+
+}?>
 <div id="CenteredContent">
 
     <?php
@@ -182,10 +205,33 @@ if(!isset($_SESSION)) {
                 <input type="submit" name="verzenden" />
             </form>
             </div>
-
+            <h1>Relevante producten:</h1>
+            <div class="relevante-producten-container">
+            <?php $producten = relevanteProducten($_GET['id'], $databaseConnection);
+                    for ($i=0; $i <= 4; $i++){
+                        $itemProduct = getStockItem($producten[$i]['StockItemID'], $databaseConnection);
+                        $image = getStockItemImage($producten[$i]['StockItemID'], $databaseConnection);
+                        print "<a href='/nerdygadgets/view.php?id=".$producten[$i]['StockItemID']."'><img src='Public/StockItemIMG/". $image[0]['ImagePath']."' /><h5><strong>".$itemProduct['StockItemName']."</strong></h5></a>";
+                    }
+            ?>
+        </div>
         </div>
         <?php
     } else {
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+<?php
+@session_start();
+$criteria = (isset($_SESSION["lastviewed"])?implode(", ",$_SESSION["lastviewed"]):"-1");
+$nummer= 0;
+
+While($nummer<count($_SESSION["lastviewed"])) {
+    $criterium = $_SESSION["lastviewed"][$nummer]??"";
+    $nummer += 1;
+    $StockItemImage = getStockItemImage($criterium, $databaseConnection);
+    if (!empty($StockItemImage)) {
+        $image = $StockItemImage[0]['ImagePath'];
+    }
+}
+    ?>

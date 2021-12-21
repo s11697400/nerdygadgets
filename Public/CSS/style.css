@@ -665,3 +665,21 @@ ul#ul-class-price li {
     border: none;
     width: fit-content;
 }
+.relevante-producten-container{
+    display: flex;
+    width: 100%;
+    overflow-x: scroll;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.relevante-producten-container a {
+    color: white;
+    margin: 10px;
+}
+.relevante-producten-container a:hover{
+background: #062c33;
+    color: white;
+}
+.relevante-producten-container img{
+    max-width: 300px;
+}
