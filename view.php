@@ -10,13 +10,6 @@ $Review = getReviews($_GET['id'], $databaseConnection);
 $StarsAvarage = getAvarageStars($_GET['id'], $databaseConnection);
 
 $id = $_GET['id'];
-if(!isset($_SESSION)) { 
-    session_start(); 
-  } ?>
-<?php
-if (!isset($_SESSION["lastviewed"])) {
-$_SESSION["lastviewed"] = array();
-}
 $maxelements = 5;
 if (isset($id) && $id <> "")
 
@@ -36,6 +29,27 @@ array_push($_SESSION["lastviewed"], $id);
 array_push($_SESSION["lastviewed"], $id);
 
 }?>
+$criteria = (isset($_SESSION["lastviewed"]) ? implode(", ", $_SESSION["lastviewed"]) : "-1");
+$nummer = 0;
+
+
+if (!isset($_SESSION["lastviewed"])) {
+    $_SESSION["lastviewed"] = array();
+}
+if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
+
+   array_push($_SESSION['lastviewed'], $_GET['id']);
+
+}
+
+?>
+<?php
+if (!isset($_SESSION["lastviewed"])) {
+$_SESSION["lastviewed"] = array();
+}
+if(!isset($_SESSION)) { 
+    session_start(); 
+  } ?>
 <div id="CenteredContent">
 
     <?php
@@ -108,16 +122,18 @@ array_push($_SESSION["lastviewed"], $id);
             <h2 class="StockItemNameViewSize StockItemName">
                 <?php print $StockItem['StockItemName']; ?>
             </h2>
-            <h3><?php printStars($StarsAvarage, true);?></h3>
+            <h3><?php printStars($StarsAvarage, true); ?></h3>
             <div class="QuantityText"><?php print $StockItem['QuantityOnHand']; ?></div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></p>
+                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b>
+                        </p>
                         <h6> Inclusief BTW </h6>
 
                         <form method="post">
-                            <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>" hidden>
+                            <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>"
+                                   hidden>
                             <input type="submit" name="submit" value="Voeg toe aan winkelmandje" class="add-to-cart">
                             <?php
                             if (isset($_POST["submit"])) {
@@ -177,33 +193,32 @@ array_push($_SESSION["lastviewed"], $id);
             <h2 class="heading">Reviews</h2><br/>
             <div class="review-grid-container">
                 <?php
-                    printStars($Review, false);
+                printStars($Review, false);
                 ?>
             </div>
 
-         
+
             <?php
-            if(!empty($_POST['verzenden']) && isset($_SESSION['submit'])){
+            if (!empty($_POST['verzenden']) && isset($_SESSION['submit'])) {
                 insertReviews($_GET['id'], $_POST['name'], $_POST['sterren'], $_POST['review'], $databaseConnection);
-               echo "<script> alert('De review is geupload dankuwel!); </script>";
-               unset($_SESSION['submit']);
-               unset($_POST['verzenden']);
-            }
-            else{
-                if(isset($_POST['verzenden'])){
-                  $_SESSION['submit'] = $_POST['verzenden'];
+                echo "<script> alert('De review is geupload dankuwel!); </script>";
+                unset($_SESSION['submit']);
+                unset($_POST['verzenden']);
+            } else {
+                if (isset($_POST['verzenden'])) {
+                    $_SESSION['submit'] = $_POST['verzenden'];
                 }
             }
 
             ?>
             <div class="review-form">
-            <h2 class="heading">Laat hier uw review achter</h2><br/>
-            <form method="post" action="">
-                <input type="name" placeholder="Vul hier uw naam in" name="name"/>
-                <input type="num" placeholder="Aantal sterren" max=5 min=0 name="sterren"/>
-                <textarea rows="10" name="review" placeholder="Laat uw review van het product achter"></textarea>
-                <input type="submit" name="verzenden" />
-            </form>
+                <h2 class="heading">Laat hier uw review achter</h2><br/>
+                <form method="post" action="">
+                    <input type="name" placeholder="Vul hier uw naam in" name="name"/>
+                    <input type="num" placeholder="Aantal sterren" max=5 min=0 name="sterren"/>
+                    <textarea rows="10" name="review" placeholder="Laat uw review van het product achter"></textarea>
+                    <input type="submit" name="verzenden"/>
+                </form>
             </div>
             <h1>Relevante producten:</h1>
             <div class="relevante-producten-container">
