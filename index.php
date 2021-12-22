@@ -1,6 +1,7 @@
 <!-- dit is het bestand dat wordt geladen zodra je naar de website gaat -->
 <?php
 include __DIR__ . "/header.php";
+include __DIR__ . "/mailStock.php";
 if(!isset($_SESSION)){
     session_start();
 

@@ -122,13 +122,14 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
             <h2 class="StockItemNameViewSize StockItemName">
                 <?php print $StockItem['StockItemName']; ?>
             </h2>
-            <h3><?php printStars($StarsAvarage, true); ?></h3>
-            <div class="QuantityText"><?php print $StockItem['QuantityOnHand']; ?></div>
+            <h3><?php printStars($StarsAvarage, true);?></h3>
+            
+            <div class="QuantityText">Vooraad: <?php print $StockItem['QuantityOnHand']; ?></div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b>
-                        </p>
+                    <?php  if( $StockItem['QuantityOnHand'] > 0){ ?>
+                        <p class="StockItemPriceText"><b><?php print sprintf("€ %.2f", $StockItem['SellPrice']); ?></b></p>
                         <h6> Inclusief BTW </h6>
 
                         <form method="post">
@@ -143,6 +144,23 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
                             }
                             ?>
                         </form>
+                  <?php } else{
+                      ?>
+                      <p>Het product is tijdelijk niet beschikbaar. 
+                          Mail mij als het product beschikbaar is:
+                      </p>
+                      <form method="post">
+                            <input type="number" name="stockItemID" value="<?php print($StockItem['StockItemID']) ?>" hidden>
+                            <input type="mail" name="mail" placeholder="Mail">
+                            <input type="submit" name="submit" value="Verzenden" class="add-to-cart">
+                            <?php
+                            if (isset($_POST["submit"])) {
+                                $stockItemID = $_POST["stockItemID"];
+                                addMail($_POST['mail'], $stockItemID, $databaseConnection);
+                            }
+                            ?>
+                        </form>
+                  <?php } ?>
                     </div>
                 </div>
             </div>
