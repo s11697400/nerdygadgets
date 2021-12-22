@@ -15,7 +15,7 @@ function printStars($reviews, $starsOnly){
             </div></div>";
 }
     } else if ($starsOnly) {
-            $reviews = $reviews[0]['avg(stars)'];
+            $reviews = $reviews['avg(stars)'];
             $reviews = round($reviews);
            $stars = "";
             for($i=0; $i<$reviews;$i++){

@@ -153,8 +153,7 @@ function updateQuantity($id, $voorraad, $quantity, $databaseConnection)
     mysqli_stmt_execute($Statement);
 }
 
-    return $R;
-}
+ 
 
 
 function getReviews($id, $databaseConnection)
@@ -193,6 +192,16 @@ function getAvarageStars($id, $databaseConnection)
                 SELECT avg(stars)
                 FROM reviews 
                 WHERE StockItemID = ?";
+
+                $Statement = mysqli_prepare($databaseConnection, $Query);
+                mysqli_stmt_bind_param($Statement, "i", $id);
+                mysqli_stmt_execute($Statement);
+
+                $result = mysqli_stmt_get_result($Statement);
+                $result = $result->fetch_array();
+                return $result;
+            }
+
 function getUnitPrice($id, $databaseConnection)
 {
     $Query = "
@@ -319,6 +328,12 @@ function getMail($databaseConnection)
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     // mysqli_stmt_bind_param($Statement, "si", $mail, $id);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+    return $R;
+}
+
 function relevanteProducten($id, $databaseConnection)
 {
 
@@ -366,14 +381,7 @@ function updateMail($id, $databaseConnection)
 }
 
 
-    $result = mysqli_stmt_get_result($Statement);
-
-    if (mysqli_num_rows($result) > 0) {
-        while ($rowData = mysqli_fetch_array($result)) {
-            return $result;
-        }
-    }
-}
+ 
 
 function insertCustomer($name, $password, $phone, $adress, $postcode, $databaseConnection){
     $Query = "INSERT INTO Customers (CustomerName, Password, PhoneNumber, DeliveryAddressLine2, PostalPostalCode, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, BillToCustomerID, LastEditedBy)
