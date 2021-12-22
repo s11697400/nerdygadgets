@@ -1,7 +1,7 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
-include "cartfuncties.php";
+// include "cartfuncties.php";
 include "viewfunctions.php";
 
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
