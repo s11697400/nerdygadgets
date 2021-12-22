@@ -62,7 +62,7 @@ function getStockItem($id, $databaseConnection)
            SELECT SI.StockItemID, 
             (RecommendedRetailPrice*(1+(TaxRate/100))) AS SellPrice, 
             StockItemName,
-            CONCAT('Voorraad: ',QuantityOnHand)AS QuantityOnHand,
+            QuantityOnHand,
             SearchDetails, 
             (CASE WHEN (RecommendedRetailPrice*(1+(TaxRate/100))) > 50 THEN 0 ELSE 6.95 END) AS SendCosts, MarketingComments, CustomFields, SI.Video,
             (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath   
@@ -100,16 +100,13 @@ function getStockItemImage($id, $databaseConnection)
 
     return $R;
 }
-
-function setPersonOrder($fullName, $preferredName, $searchName, $phoneNumber, $emailAdress, $validDate, $databaseConnection)
+function getStockItemName($id, $databaseConnection)
 {
 
-    $Query = "INSERT INTO people (FullName, PreferredName, SearchName, IsPermittedToLogon, LogonName, IsExternalLogonProvider, HashedPassword,
-                    IsSystemUser, IsEmployee, IsSalesperson, UserPreferences, PhoneNumber, FaxNumber, EmailAddress, Photo,
-                    CustomFields, OtherLanguages, LastEditedBy, ValidFrom, ValidTo)
-              VALUES ($fullName , $preferredName , $searchName , 0, NULL, 0, NULL,
-                      0, 0, 0, NULL, $phoneNumber , NULL , $emailAdress ,  NULL,
-                      NULL, NULL, 1, $validDate , '9999-12-31')";
+    $Query = "
+                SELECT StockItemName
+                FROM stockitems 
+                WHERE StockItemID = ?";
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "i", $id);
@@ -120,18 +117,41 @@ function setPersonOrder($fullName, $preferredName, $searchName, $phoneNumber, $e
     return $R;
 }
 
-function removeQuantityOutOfDatabase($id, $databaseConnection) {
+function insertOrderLines($orderID, $stockItemID, $description, $packageTypeID, $quantity,
+                          $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
+                          $lastEditedBy, $lastEditedWhen, $databaseConnection)
+{
 
+    $Query = "INSERT INTO `orderlines`(`OrderID`, `StockItemID`, `Description`, `PackageTypeID`, `Quantity`,
+                         `UnitPrice`, `TaxRate`, `PickedQuantity`, `PickingCompletedWhen`, 
+                         `LastEditedBy`, `LastEditedWhen`)
+              VALUES (?, ?, ?, ?, ?,
+                        ?, ?, ?, ?, 
+                      ?, ?)";
+
+    $stmt = $databaseConnection->prepare($Query);
+    $stmt->bind_param("iisiiddisss",$orderID, $stockItemID, $description, $packageTypeID, $quantity,
+        $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
+        $lastEditedBy, $lastEditedWhen);
+
+    $stmt->execute();
+
+    return "<h1> Betaald! De bestelling wordt verwerkt!</h1>";
+}
+
+//function insertOrders($databaseConnection) {}
+
+function updateQuantity($id, $voorraad, $quantity, $databaseConnection)
+{
     $Query = "
     UPDATE stockitemholdings
-    SET QuantityOnHand=
+    SET QuantityOnHand=$voorraad - $quantity
     WHERE StockItemID=$id
     ";
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
-    $R = mysqli_stmt_get_result($Statement);
-    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+}
 
     return $R;
 }
@@ -173,6 +193,98 @@ function getAvarageStars($id, $databaseConnection)
                 SELECT avg(stars)
                 FROM reviews 
                 WHERE StockItemID = ?";
+function getUnitPrice($id, $databaseConnection)
+{
+    $Query = "
+    SELECT UnitPrice 
+    FROM `stockitems` 
+    WHERE StockItemID=$id
+    ";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $rowData['UnitPrice'];
+        }
+    }
+
+}
+
+function insertOrder($databaseConnection)
+{
+
+    $Query = "INSERT INTO `orders`(`CustomerID`, `SalespersonPersonID`, `ContactPersonID`, `LastEditedBy`)
+              VALUES (2, 2, 2, 25)";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $stmt->execute();
+    $last_id = mysqli_insert_id($databaseConnection);
+   return $last_id;
+}
+
+//(mysql_num_rows(mysql_query("SELECT * FROM `users` WHERE 'site_name' LIKE 'berland' AND 'card_id' LIKE '290093C84E' LIMIT 0 , 30"))>0
+
+function checkUser($username, $password, $databaseConnection)
+{
+
+    $Query = "SELECT PostalPostalCode, DeliveryAddressLine2, CustomerID, CustomerName, Password FROM `customers` WHERE CustomerName = ? AND Password = ?";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "ss", $username, $password);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+    
+}
+
+function getOrders($id, $databaseConnection)
+{
+
+    $Query = "SELECT * FROM `orders` WHERE CustomerID = ? ORDER BY OrderDate";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+}
+function getOrderlines($id, $databaseConnection)
+{
+
+    $Query = "SELECT * FROM `orderlines` WHERE OrderID = ?";
+
+    $stmt = $databaseConnection->prepare($Query);
+    
+
 
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "i", $id);
@@ -198,4 +310,38 @@ where StockItemID = ?)";
     $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
 
     return $R;
+
+    $result = mysqli_stmt_get_result($Statement);
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($rowData = mysqli_fetch_array($result)) {
+            return $result;
+        }
+    }
+}
+
+function insertCustomer($name, $password, $phone, $adress, $postcode, $databaseConnection){
+    $Query = "INSERT INTO Customers (CustomerName, Password, PhoneNumber, DeliveryAddressLine2, PostalPostalCode, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, BillToCustomerID, LastEditedBy)
+    VALUES (?,?,?,?,?, 3, 1001, 3, 38186, 38186, 1, 20)";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "sssss", $name, $password, $phone, $adress, $postcode);
+    mysqli_stmt_execute($Statement);
+
+    $result = mysqli_stmt_get_result($Statement);
+    return $result;
+}
+function UserAdress($id, $databaseConnection){
+    $Query = "SELECT PostalPostalCode, DeliveryAddressLine2 FROM Customers
+    WHERE CustomerID = ?";
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param($Statement, "i", $id);
+        mysqli_stmt_execute($Statement);
+    
+        $result = mysqli_stmt_get_result($Statement);
+    
+        if (mysqli_num_rows($result) > 0) {
+            while ($rowData = mysqli_fetch_array($result)) {
+                return $result;
+            }
+        }
 }

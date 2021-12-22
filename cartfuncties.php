@@ -63,3 +63,23 @@ function updateCart($stockItemID, $amount)
 	return $amount;
 									// werk de "gedeelde" $_SESSION["cart"] bij met de bijgewerkte cart
 }
+
+
+function bestelForm($adress, $postcode){
+    if($adress == false && $postcode == false){
+    $output = '<form method="post">';
+    $output .= '<input type="text" placeholder="Straat en huisnummer"/>';
+    $output .= '<input type="text" placeholder="Postcode"/>';
+    $output .= '<input type="submit" value="Betalen" name="betalen"/>';
+    $output .= '</form>';
+    }
+    else{
+        $output = '<form method="post">';
+        $output .= '<input type="text" placeholder="Straat en huisnummer" value="'.$adress.'"/>';
+        $output .= '<input type="text" placeholder="Postcode" value="'.$postcode.'"/>';
+        $output .= '<input type="submit" value="Betalen" name="betalen"/>';
+        $output .= '</form>';
+    }
+
+return $output;
+}
