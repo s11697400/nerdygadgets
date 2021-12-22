@@ -705,6 +705,6 @@ ul#ul-class-price li {
 background: #062c33;
     color: white;
 }
-.relevante-producten-container img{
+.relevante-producten-container img, #Recentplaatje img{
     max-width: 300px;
 }

@@ -13,6 +13,13 @@ $id = $_GET['id'];
 $maxelements = 5;
 if (isset($id) && $id <> "")
 
+    if(!isset($_SESSION)) { 
+        session_start(); 
+      }
+if (!isset($_SESSION["lastviewed"])) {
+$_SESSION["lastviewed"] = array();
+}
+
 if (in_array($id, $_SESSION["lastviewed"])) {
 
 $_SESSION["lastviewed"] = array_diff($_SESSION["lastviewed"], array($id));
@@ -28,14 +35,12 @@ array_push($_SESSION["lastviewed"], $id);
 } else {
 array_push($_SESSION["lastviewed"], $id);
 
-}?>
+}
 $criteria = (isset($_SESSION["lastviewed"]) ? implode(", ", $_SESSION["lastviewed"]) : "-1");
 $nummer = 0;
 
 
-if (!isset($_SESSION["lastviewed"])) {
-    $_SESSION["lastviewed"] = array();
-}
+
 if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
 
    array_push($_SESSION['lastviewed'], $_GET['id']);
@@ -44,12 +49,7 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
 
 ?>
 <?php
-if (!isset($_SESSION["lastviewed"])) {
-$_SESSION["lastviewed"] = array();
-}
-if(!isset($_SESSION)) { 
-    session_start(); 
-  } ?>
+ ?>
 <div id="CenteredContent">
 
     <?php
