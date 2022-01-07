@@ -54,6 +54,10 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
 
     <?php
     if ($StockItem != null) {
+        if ($StockItem['StockItemID'] >= 220 && $StockItem['StockItemID'] <= 227){
+            $temp = getTemprature($databaseConnection);
+            print "<h3>".$temp[0]." C°</h3>";
+        }
         ?>
         <?php
         if (isset($StockItem['Video'])) {
@@ -227,8 +231,9 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
                     $_SESSION['submit'] = $_POST['verzenden'];
                 }
             }
-
+            
             ?>
+            <?php if(isset($_SESSION['login'])) : ?>
             <div class="review-form">
                 <h2 class="heading">Laat hier uw review achter</h2><br/>
                 <form method="post" action="">
@@ -238,6 +243,7 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
                     <input type="submit" name="verzenden"/>
                 </form>
             </div>
+            <?php endif; ?>
             <h1>Relevante producten:</h1>
             <div class="relevante-producten-container">
             <?php $producten = relevanteProducten($_GET['id'], $databaseConnection);

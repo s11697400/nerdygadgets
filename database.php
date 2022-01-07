@@ -408,3 +408,21 @@ function UserAdress($id, $databaseConnection){
             }
         }
 }
+
+
+function getTemprature($databaseConnection)
+{
+
+    $Query = "
+                SELECT Temperature
+                FROM coldroomtemperatures 
+                WHERE ColdRoomSensorNumber = 3";
+
+                $Statement = mysqli_prepare($databaseConnection, $Query);
+                
+                mysqli_stmt_execute($Statement);
+
+                $result = mysqli_stmt_get_result($Statement);
+                $result = $result->fetch_array();
+                return $result;
+            }

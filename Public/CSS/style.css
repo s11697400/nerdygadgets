@@ -680,7 +680,7 @@ ul#ul-class-price li {
 }
 
 .button.delete-from-cart {
-    background: red;
+    background: grey;
     color: #fff;
     font-weight: 700;
     border-radius: 6px;

@@ -4,7 +4,7 @@ if(!isset($_SESSION)){
     session_start();
 }
 if(!isset($_SESSION['login'])){
-    die("FORBIDDEN");
+    die("<h1 style='text-align:center;'>FORBIDDEN PLEASE LOGIN</h1>");
 }
 $orders = getOrders($_SESSION['id'], $databaseConnection);
 
