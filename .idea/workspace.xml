@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ab8655e-ce96-41b8-8919-f2776cf95d88" name="Changes" comment="">
+    <list default="true" id="6ab8655e-ce96-41b8-8919-f2776cf95d88" name="Changes" comment="Changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfuncties.php" beforeDir="false" afterPath="$PROJECT_DIR$/testfuncties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/register.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +67,10 @@
       <workItem from="1636978607408" duration="2158000" />
       <workItem from="1638258013056" duration="3716000" />
       <workItem from="1639481728367" duration="6041000" />
+      <workItem from="1641546396826" duration="1665000" />
+      <workItem from="1641548654931" duration="1004000" />
+      <workItem from="1641549730508" duration="599000" />
+      <workItem from="1641558578955" duration="2132000" />
     </task>
     <servers />
   </component>
@@ -85,5 +87,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
