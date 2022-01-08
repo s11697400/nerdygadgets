@@ -3,10 +3,23 @@
 include __DIR__ . "/header.php";
 
 if(isset($_POST['submit'])){
-   $customer = insertCustomer($_POST['name'], $_POST['password'], $_POST['phone'], $_POST['adress'], $_POST['postcode'], $databaseConnection);
-    if($customer){
-        print "Account is toegevoegd";
+    $password = $_POST ['password'];
+
+// Validate password strength
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
+
+    if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        echo 'Het wachtwoord moet minimaal 8 tekens lang zijn en moet minimaal één hoofdletter, één cijfer en één speciaal teken bevatten.';
+    }else{
+        $customer = insertCustomer($_POST['name'], $_POST['password'], $_POST['phone'], $_POST['adress'], $_POST['postcode'], $databaseConnection);
+        if($customer){
+            print "Account is toegevoegd";
+        }
     }
+
 }
 ?>
 <div class="container-login">
