@@ -83,7 +83,10 @@ function getStockItem($id, $databaseConnection)
 
     return $Result;
 }
-
+function startTransaction($databaseConnection){
+    // $databaseConnection->begin_transaction();
+    $databaseConnection->autocommit(FALSE);
+}
 function getStockItemImage($id, $databaseConnection)
 {
 
@@ -133,14 +136,21 @@ function insertOrderLines($orderID, $stockItemID, $description, $packageTypeID, 
     $stmt->bind_param("iisiiddisss",$orderID, $stockItemID, $description, $packageTypeID, $quantity,
         $unitPrice, $taxRate, $pickedQuantity, $pickingCompletedWhen,
         $lastEditedBy, $lastEditedWhen);
-
+try{
     $stmt->execute();
 
     return "<h1> Betaald! De bestelling wordt verwerkt!</h1>";
+    // $databaseConnection->commit();
+} catch (Exception $e){
+    $databaseConnection->rollback();
+}
+
 }
 
 //function insertOrders($databaseConnection) {}
-
+function dbCommit($databaseConnection){
+    $databaseConnection->commit();
+}
 function updateQuantity($id, $voorraad, $quantity, $databaseConnection)
 {
     $Query = "
@@ -231,11 +241,16 @@ function insertOrder($databaseConnection)
 
     $stmt = $databaseConnection->prepare($Query);
     
-
+    try {
 
     $stmt->execute();
     $last_id = mysqli_insert_id($databaseConnection);
    return $last_id;
+   
+} catch (Exception $e){
+    $databaseConnection->rollback();
+}
+
 }
 
 //(mysql_num_rows(mysql_query("SELECT * FROM `users` WHERE 'site_name' LIKE 'berland' AND 'card_id' LIKE '290093C84E' LIMIT 0 , 30"))>0

@@ -33,7 +33,7 @@ else{
     <?php
     if(isset($_SESSION['lastviewed'])){
     $criteria = (isset($_SESSION["lastviewed"])?implode(", ",$_SESSION["lastviewed"]):"-1");
-    $nummer= 0;
+    $nummer= 1;
 
     $lastViewed = $_SESSION['lastviewed'];
 
@@ -41,9 +41,10 @@ print' <div class="image">
         <div id="Recentplaatje">';
     if (count($_SESSION["lastviewed"]) > 0) {
     while($nummer<count($_SESSION["lastviewed"])) {
+        
     $criterium = $_SESSION["lastviewed"][$nummer];
         $StockItemImage = getStockItemImage($criterium, $databaseConnection);
-    $nummer+=1;
+        $nummer+=1;
 
     if (!empty($StockItemImage)) {
         $image = $StockItemImage[0]['ImagePath'];
@@ -51,7 +52,7 @@ print' <div class="image">
 
 
 
-   print '<a class="image" href="view.php?id='. $_SESSION['lastviewed'][0].'"> <img src="Public/StockItemIMG/'. $image .'" /></a>
+   print '<a class="image" href="view.php?id='. $_SESSION['lastviewed'][1].'"> <img src="Public/StockItemIMG/'. $image .'" /></a>
  ';
 
         }}

@@ -103,6 +103,7 @@ foreach($adresses as $adress){
                 }
                 if(isset($_POST['betalen'])){
                     $_POST['submitOrder'] = "DATA";
+                    startTransaction($databaseConnection);
                     $orderID = insertOrder($databaseConnection);
                     foreach ($cart as $id => $quantity) {
                         $getUnitPrice = getUnitPrice($id, $databaseConnection);
@@ -123,10 +124,12 @@ foreach($adresses as $adress){
                         $pickedQuantity = $quantity;
                         $lastEditedBy = 4;
 
-                        print insertOrderLines($orderID,$stockItemID, $description, 1, $quantity,
-                            $unitPrice, 15.000, 15, "2021-12-12 00:00:00",
-                            $lastEditedBy, "2021-12-12 00:00:00", $databaseConnection);  
+                        $orderline = insertOrderLines($orderID,$stockItemID, $description, 1, $quantity,
+                            $unitPrice, 15.000, 15, date("Y-m-d H:i:s"),
+                            $lastEditedBy, date("Y-m-d H:i:s"), $databaseConnection);  
                 }
+                print $orderline;
+                dbCommit($databaseConnection);
             }
                 if (!empty($cart)&& !isset($_POST['submitOrder'])){
                     ?>
