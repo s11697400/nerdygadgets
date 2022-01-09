@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ab8655e-ce96-41b8-8919-f2776cf95d88" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/database.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testfuncties.php" beforeDir="false" afterPath="$PROJECT_DIR$/testfuncties.php" afterDir="false" />
-    </list>
+    <list default="true" id="6ab8655e-ce96-41b8-8919-f2776cf95d88" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,12 +42,18 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../testtje" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="PHP" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\nerdygadgets" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -69,6 +70,11 @@
       <workItem from="1636978607408" duration="2158000" />
       <workItem from="1638258013056" duration="3716000" />
       <workItem from="1639481728367" duration="6041000" />
+      <workItem from="1641547458297" duration="743000" />
+      <workItem from="1641578482097" duration="1023000" />
+      <workItem from="1641668775940" duration="5658000" />
+      <workItem from="1641677101641" duration="1422000" />
+      <workItem from="1641718992759" duration="60000" />
     </task>
     <servers />
   </component>
@@ -85,5 +91,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
