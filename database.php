@@ -140,7 +140,7 @@ try{
     $stmt->execute();
 
     return "<h1> Betaald! De bestelling wordt verwerkt!</h1>";
-    // $databaseConnection->commit();
+    
 } catch (Exception $e){
     $databaseConnection->rollback();
 }
