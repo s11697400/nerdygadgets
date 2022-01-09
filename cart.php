@@ -128,8 +128,18 @@ foreach($adresses as $adress){
                             $unitPrice, 15.000, 15, date("Y-m-d H:i:s"),
                             $lastEditedBy, date("Y-m-d H:i:s"), $databaseConnection);  
                 }
-                print $orderline;
+                if(isset($orderline)){
                 dbCommit($databaseConnection);
+                session_unset();
+            
+                $_SESSION['betaald'] = true;
+                $_SESSION['totaalPrijs'] = $totalPrice;
+                ?>
+                <script type="text/javascript">
+window.location.pathname = '/nerdygadgets/betaald.php';
+</script>
+<?php
+                }
             }
                 if (!empty($cart)&& !isset($_POST['submitOrder'])){
                     ?>

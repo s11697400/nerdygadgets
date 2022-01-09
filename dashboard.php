@@ -16,6 +16,7 @@ $orders = getOrders($_SESSION['id'], $databaseConnection);
     <h3><?= $_SESSION['postcode'] ?></h3>
     <div class="container-aankopen">
 <?php
+if(!empty($orders)){
 foreach($orders as $order){
     print "<div class='order-container'>";
     $orderlines = getOrderlines($order['OrderID'], $databaseConnection);
@@ -28,7 +29,7 @@ foreach($orders as $order){
         print "<div>Aantal ". $orderline['PickedQuantity'] . "</div>";
         print "<div>Prijs: ". $orderline['UnitPrice'] . "</div>";
         print "<hr style='border-color: white;width: 200px;'/><br/>";
-
+    }
     }
     print "</div>";
 }

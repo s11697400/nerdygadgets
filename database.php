@@ -399,8 +399,8 @@ function updateMail($id, $databaseConnection)
  
 
 function insertCustomer($name, $password, $phone, $adress, $postcode, $databaseConnection){
-    $Query = "INSERT INTO Customers (CustomerName, Password, PhoneNumber, DeliveryAddressLine2, PostalPostalCode, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, BillToCustomerID, LastEditedBy)
-    VALUES (?,?,?,?,?, 3, 1001, 3, 38186, 38186, 1, 20)";
+    $Query = "INSERT INTO Customers (CustomerName, Password, PhoneNumber, DeliveryAddressLine2, PostalPostalCode, CustomerCategoryID, PrimaryContactPersonID, DeliveryMethodID, DeliveryCityID, PostalCityID, LastEditedBy, BillToCustomerID)
+    VALUES (?,?,?,?,?, 3, 3, 3, 38186, 38186, 20, 1)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_bind_param($Statement, "sssss", $name, $password, $phone, $adress, $postcode);
     mysqli_stmt_execute($Statement);
