@@ -33,6 +33,7 @@ foreach($orders as $order){
     }
     print "</div>";
 }
+}
 ?>
     </div>
 </div>
