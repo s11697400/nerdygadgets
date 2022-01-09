@@ -8,12 +8,9 @@ if(!isset($_SESSION)){
 
 //
 if (isset($_POST["submit"])) {
-    if (empty(trim($_POST["submit"]))) {
-        print ("Please enter username.");
-    } else {
         print("   Er is een e-mail verstuurd indien een geldig email adres is opgegeven. ");
     }
-}
+
 ?>
 
 
@@ -21,7 +18,7 @@ if (isset($_POST["submit"])) {
 <div class="container-login">
     <form method="post">
         <p>Wachtwoord opnieuw aanvragen.</p>
-        <input name="submit" placeholder="E-mail adres">
+        <input name="mail" placeholder="E-mail adres" required>
         <input type="submit" name="submit" value="Verzend e-mail">
     </form>
     <a href="/nerdygadgets/index.php"> Homepage</a> | <a href="/nerdygadgets/login.php"> Login</a> | <a href="/nerdygadgets/register.php">Register</a>
