@@ -29,7 +29,7 @@ foreach($orders as $order){
         print "<div>Aantal ". $orderline['PickedQuantity'] . "</div>";
         print "<div>Prijs: ". $orderline['UnitPrice'] . "</div>";
         print "<hr style='border-color: white;width: 200px;'/><br/>";
-    }
+
     }
     print "</div>";
 }

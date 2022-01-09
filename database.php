@@ -233,17 +233,19 @@ function getUnitPrice($id, $databaseConnection)
 
 }
 
-function insertOrder($databaseConnection)
+function insertOrder($id, $databaseConnection)
 {
 
     $Query = "INSERT INTO `orders`(`CustomerID`, `SalespersonPersonID`, `ContactPersonID`, `LastEditedBy`)
-              VALUES (2, 2, 2, 25)";
+              VALUES (?, 2, 2, 25)";
 
-    $stmt = $databaseConnection->prepare($Query);
-    
+    $Statement = $databaseConnection->prepare($Query);
+    mysqli_stmt_bind_param($Statement, "i", $id);
+  
+
     try {
 
-    $stmt->execute();
+    $Statement->execute();
     $last_id = mysqli_insert_id($databaseConnection);
    return $last_id;
    

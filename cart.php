@@ -104,7 +104,7 @@ foreach($adresses as $adress){
                 if(isset($_POST['betalen'])){
                     $_POST['submitOrder'] = "DATA";
                     startTransaction($databaseConnection);
-                    $orderID = insertOrder($databaseConnection);
+                    $orderID = insertOrder($_SESSION['id'], $databaseConnection);
                     foreach ($cart as $id => $quantity) {
                         $getUnitPrice = getUnitPrice($id, $databaseConnection);
 
@@ -130,10 +130,10 @@ foreach($adresses as $adress){
                 }
                 if(isset($orderline)){
                 dbCommit($databaseConnection);
-                session_unset();
-            
+                
                 $_SESSION['betaald'] = true;
                 $_SESSION['totaalPrijs'] = $totalPrice;
+                print '<h1 style="text-align: center;">Uw bestelling word verwerkt.</h1>'
                 ?>
                 <script type="text/javascript">
 window.location.pathname = '/nerdygadgets/betaald.php';
