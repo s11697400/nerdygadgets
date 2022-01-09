@@ -238,7 +238,7 @@ if (!in_array($_GET['id'], $_SESSION["lastviewed"])) {
                 <h2 class="heading">Laat hier uw review achter</h2><br/>
                 <form method="post" action="">
                     <input type="name" placeholder="Vul hier uw naam in" name="name"/>
-                    <input type="num" placeholder="Aantal sterren" max=5 min=0 name="sterren"/>
+                    <input type="num" placeholder="Aantal sterren" max="5" min="1" name="sterren"/>
                     <textarea rows="10" name="review" placeholder="Laat uw review van het product achter"></textarea>
                     <input type="submit" name="verzenden"/>
                 </form>
