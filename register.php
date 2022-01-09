@@ -2,20 +2,16 @@
 
 include __DIR__ . "/header.php";
 
-if(isset($_POST['submit'])){
-    $password = $_POST ['password'];
+if(isset($_POST['submit'])) {
+    $postcode = $_POST ['postcode'];
 
-// Validate password strength
-    $uppercase = preg_match('@[A-Z]@', $password);
-    $lowercase = preg_match('@[a-z]@', $password);
-    $number    = preg_match('@[0-9]@', $password);
-    $specialChars = preg_match('@[^\w]@', $password);
+    $viercijferstweeletters = preg_match('/^[1-9][0-9]{3} ?[a-zA-Z]{2}$/', $postcode);
 
-    if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
-        echo 'Het wachtwoord moet minimaal 8 tekens lang zijn en moet minimaal één hoofdletter, één cijfer en één speciaal teken bevatten.';
-    }else{
+    if (!$viercijferstweeletters) {
+        print 'Het is geen geldige postcode!';
+    } else {
         $customer = insertCustomer($_POST['name'], $_POST['password'], $_POST['phone'], $_POST['adress'], $_POST['postcode'], $databaseConnection);
-        if($customer){
+        if ($customer) {
             print "Account is toegevoegd";
         }
     }
@@ -29,8 +25,8 @@ if(isset($_POST['submit'])){
         <input type="text" name="phone" placeholder="Telefoonnummer" required/>
         <input type="text" name="adress" placeholder="Adress" required/>
         <input type="text" name="postcode" placeholder="Postcode" required/>
-        <div>  <input type="checkbox" name="privacy" required/>
-  <label for="privacy">Ik ga akkoord met het privacybeleid</label></div>
+        <div><input type="checkbox" name="privacy" required/>
+            <label for="privacy">Ik ga akkoord met het privacybeleid</label></div>
         <input type="submit" name="submit" value="Registreren"/>
     </form>
 </div>
