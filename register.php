@@ -21,8 +21,13 @@ if(isset($_POST['submit'])) {
             if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
                 echo 'Het wachtwoord moet minimaal 8 tekens lang zijn en moet minimaal één hoofdletter, één cijfer en één speciaal teken bevatten.';
             } else{
+                if($_POST['password'] == $_POST['password2']){
                 $customer = insertCustomer($_POST['name'], md5($_POST['password']), $_POST['phone'], $_POST['adress'], $_POST['postcode'], $databaseConnection);
             }
+            else{
+                print "<h1>  Wachtwoorden komen niet overeen</h1>";
+            }
+        }
             if (isset($customer)) {
             print "Account is toegevoegd";
         }
@@ -34,6 +39,7 @@ if(isset($_POST['submit'])) {
     <form method="post">
         <input type="text" name="name" placeholder="Naam" required/>
         <input type="password" name="password" placeholder="Password" required/>
+        <input type="password" name="password2" placeholder="Herhaal password" required/>
         <input type="text" name="phone" placeholder="Telefoonnummer" required/>
         <input type="text" name="adress" placeholder="Adress" required/>
         <input type="text" name="postcode" placeholder="Postcode" required/>
