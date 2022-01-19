@@ -125,7 +125,7 @@ foreach($adresses as $adress){
                         $lastEditedBy = 4;
 
                         $orderline = insertOrderLines($orderID,$stockItemID, $description, 1, $quantity,
-                            $unitPrice, 15.000, 15, date("Y-m-d H:i:s"),
+                            $unitPrice, 21.000, $quantity, date("Y-m-d H:i:s"),
                             $lastEditedBy, date("Y-m-d H:i:s"), $databaseConnection);  
                 }
                 if(isset($orderline)){

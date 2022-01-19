@@ -255,7 +255,6 @@ function insertOrder($id, $databaseConnection)
 
 }
 
-//(mysql_num_rows(mysql_query("SELECT * FROM `users` WHERE 'site_name' LIKE 'berland' AND 'card_id' LIKE '290093C84E' LIMIT 0 , 30"))>0
 
 function checkUser($username, $password, $databaseConnection)
 {
